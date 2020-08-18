@@ -14,7 +14,7 @@ import triggerEvent from '../util/triggerEvent.js';
  * @param  {type} newImageIdIndex The target image index.
  * @returns {void}
  */
-export default function(element, newImageIdIndex) {
+export default function(element, newImageIdIndex, isSilent = false) {
   const toolData = getToolState(element, 'stack');
 
   if (!toolData || !toolData.data || !toolData.data.length) {
@@ -129,5 +129,7 @@ export default function(element, newImageIdIndex) {
   // Make sure we kick off any changed download request pools
   requestPoolManager.startGrabbing();
 
-  triggerEvent(element, EVENTS.STACK_SCROLL, eventData);
+  if (!isSilent) {
+    triggerEvent(element, EVENTS.STACK_SCROLL, eventData);
+  }
 }
